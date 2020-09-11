@@ -3,48 +3,61 @@ using namespace std;
 
 int main() {
 
-    // freopen("smallsort.in", "r", stdin);
-    // freopen("smallsort.out", "w", stdout);
+    freopen("sortland.in", "r", stdin);
+    freopen("sortland.out", "w", stdout);
 
     /* Ввод данных */
+
     int n, i, j;
     cin >> n;
     float a[n];
-    float k;
-    float min_k = 1000001;
-    float max_k = 0;
+    float b[n];
 
     for (i = 0; i < n; i++) {
         cin >> a[i];
+        b[i] = a[i];
     }
 
     /* Сортировка данных */
-    /* Поиск минимума */
+
     for (i = 0; i < n; i++) {
-        if (a[i] < min_k) {
-            min_k = a[i];
+
+        int b_min = i;
+
+        for (j = i + 1; j < n; j++) {
+            if (b[j] < b[b_min]) {
+                b_min = j;
+            }
+        }
+
+        swap(b[i], b[b_min]);
+    }
+
+    float one;
+    float two;
+    float three;
+
+    one = b[0];
+    two = b[n/2];
+    three = b[n-1];
+
+    for (i = 0; i < n; i++) {
+        if (one == a[i]) {
+            cout << i+1 << " ";
         }
     }
 
-    /* Поиск среднего */
     for (i = 0; i < n; i++) {
-        k += a[i];
-    }
-    k / n;
-
-    /* Поиск максимума */
-    for (i = 0; i < n; i++) {
-        if (a[i] > max_k) {
-            max_k = a[i];
+        if (two == a[i]) {
+            cout << i+1 << " ";
         }
     }
 
-    /* Вывод данных */
-    // for (i = 0; i < n; i++) {
-    //     cout << a[i] << " ";
-    // }
-
-    cout << min_k << " " << max_k << endl;
+    for (i = 0; i < n; i++) {
+        if (three == a[i]) {
+            cout << i+1 << " ";
+        }
+    }
 
     return 0;
 }
