@@ -6,6 +6,6 @@ int main() {
     freopen("aplusb.in", "r", stdin);
     freopen("aplusb.out", "w", stdout);
     cin >> a >> b;
-    cout << a + b << endl;
+    cout << a + b << endl
     return 0;
 }
