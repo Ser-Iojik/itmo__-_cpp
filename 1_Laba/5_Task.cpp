@@ -10,7 +10,7 @@ int main() {
 
     int n, i, j;
     cin >> n;
-    float a[n];
+.    float a[n];
     float b[n];
 
     for (i = 0; i < n; i++) {
@@ -32,9 +32,11 @@ int main() {
 
         swap(b[i], b[b_min]);
     }
-
+// Задание переменных
     float one;
+    
     float two;
+
     float three;
 
     one = b[0];
