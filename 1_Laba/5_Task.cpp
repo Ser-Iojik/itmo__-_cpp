@@ -10,7 +10,7 @@ int main() {
 
     int n, i, j;
     cin >> n;
-.    float a[n];
+    float a[n];
     float b[n];
 
     for (i = 0; i < n; i++) {
