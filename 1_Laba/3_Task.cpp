@@ -2,11 +2,11 @@
 using namespace std;
 
 int main() {
-    freopen("turtle.in", "r", stdin);
-    freopen("turtle.out", "w", stdout);
+    // freopen("turtle.in", "r", stdin);
+    // freopen("turtle.out", "w", stdout);
 
     // Задание переменных и ввод данных
-	int max = 1001;
+	const int max = 1001;
 	int h, w, i, j;
 	int a[max][2] = {};
 	int p = 0, k = 0;
@@ -14,7 +14,6 @@ int main() {
 	cin >> h >> w;
 
 	for (i = 0; i < h; i++) {
-
 		p = i % 2;
         // Ввод значений верхней строки таблицы
 		for (j = w ; j > 0; j--) {
