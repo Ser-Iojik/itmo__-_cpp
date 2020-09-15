@@ -19,11 +19,13 @@ int main() {
 		for (j = w ; j > 0; j--) {
 		    cin >> a[j][p];
 		}
+
 		if (i == 0) {
 			for (k = 1; k <= w; k++) {
 				a[k][0] += a[k - 1][0];
             }
 		}
+
 		else {
 			for (k = 1; k <= w; k++) {
 				if (a[k][1 - p] > a[k - 1][p]) {
@@ -34,6 +36,7 @@ int main() {
                 }
             }
         }
+		
 	}
 
 	cout << a[w][p];

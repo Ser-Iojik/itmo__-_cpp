@@ -7,7 +7,8 @@ int main() {
     // freopen("smallsort.out", "w", stdout);
 
     /* Ввод данных */
-    int n, i, j;
+    int n;
+    int i, j;
     cin >> n;
     int a[n];
     
