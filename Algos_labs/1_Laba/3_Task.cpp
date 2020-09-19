@@ -2,8 +2,8 @@
 using namespace std;
 
 int main(void) {
-    freopen("turtle.in", "r", stdin);
-    freopen("turtle.out", "w", stdout);
+    // freopen("turtle.in", "r", stdin);
+    // freopen("turtle.out", "w", stdout);
 
     int h, w, i, j;
     cin >> h >> w;

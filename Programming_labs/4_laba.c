@@ -1,6 +1,6 @@
 #include <stdio.h>  
 
-void main() {
+int main() {
     // 1 Task
     // Вводим константы - границы диапазона
     const int MIN_VALUE = 88;
