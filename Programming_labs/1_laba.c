@@ -14,4 +14,6 @@ int main() {
 
     scanf("%c", &c);
     printf("%c\n", c);
+    
+    return 0;
 }

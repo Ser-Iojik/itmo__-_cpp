@@ -21,4 +21,6 @@ int main() {
     scanf("%d", &a2);
     z2 = 0.25 - 0.25 * sin(2.5 * PI - 8 * a2);
     printf("%f\n", z2);
+
+    return 0;
 }
