@@ -36,4 +36,6 @@ int main() {
     // Ввели число в 16-ой сс
     scanf("%x", &b);
     printf("%x", b ^ a);
+
+    return 0;
 }
