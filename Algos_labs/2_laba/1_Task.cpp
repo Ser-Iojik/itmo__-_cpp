@@ -1,11 +1,15 @@
 #include <iostream>
 using namespace std;
 
+int Quicksort(int arr[], int n) {
+    
+}
+
 int main() {
     freopen("sort.in", "r", stdin);
     freopen("sort.out", "w", stdout);
     long n, a_min;
-    int i, j, k;
+    int i, j, pivot, L, G;
     cin >> n;
     long a[n];
 
@@ -13,19 +17,14 @@ int main() {
         cin >> a[i];
     }
 
-    for (i = 0; i < n; i++) {
-        a_min = a[i];
-        for (j = i + 1; j < n; j++) {
-            if (a[j] < a_min) {
-                k = a[j];
-                a[j] = a_min;
-                a_min = k;
-            }
+    int QuickSort(a[n]) {
+        if (length(a[n]) < 2) {
+            return a[n];
+        } else {
+            pivot = a[0];
+            return 0;
         }
-        a[i] = a_min;
-    }
-    for (i = 0; i < n; i++) {
-        cout << a[i] << " ";
+        return 0;
     }
 
     return 0;
