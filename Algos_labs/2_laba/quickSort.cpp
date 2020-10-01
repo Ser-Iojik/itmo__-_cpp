@@ -8,10 +8,12 @@ void swap(int* a, int* b) {
     *b = t;
 } 
    
-
+// Используем разбиение массива и опорный элемент на самом правом месте
+// Таким образом мы поставим опорный элемент в такое место, 
+// где слева будут все числа меньше него, а справа больше
 int partition (int arr[], int low, int high) {
-    int pivot = arr[high];// pivot 
-    int i = (low - 1);   
+    int pivot = arr[high];
+    int i = (low - 1);
    
     for (int j = low; j <= high- 1; j++) { 
         // Если текущий элемент меньше опорного, то выполняем i++ и меняем местами i и j
@@ -26,8 +28,9 @@ int partition (int arr[], int low, int high) {
    
 void quickSort(int arr[], int low, int high) { 
     if (low < high) { 
+        // Устанавливаем опорный элемент
         int pivot = partition(arr, low, high); 
-   
+        // Сортируем
         quickSort(arr, low, pivot - 1); 
         quickSort(arr, pivot + 1, high); 
     } 

@@ -36,8 +36,8 @@ void mergeSort(long left, long right) {
 }
 // Сортируем массив, но отсортированные части не сохраняем, а считаем их перемещения
 int main() {
-    // freopen("inversions.in", "r", stdin);
-    // freopen("inversions.out", "w", stdout);
+    freopen("inversions.in", "r", stdin);
+    freopen("inversions.out", "w", stdout);
 
     cin >> n;
     for (int i = 0; i < n; ++i) {
