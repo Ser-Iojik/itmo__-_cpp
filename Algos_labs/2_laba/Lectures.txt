@@ -1,0 +1,82 @@
+int function(int a) {
+    a = a + 1;
+    return a;
+}
+
+void function_2(int *pa) {
+    (*pa)++;
+}
+
+int main () {
+
+    int b;
+    b = 3;
+    b = function(b);
+    function_2(&b);
+
+    int a;
+    int *pa; // * указывает на то что появился указатель 32 бита (4Б)
+    char *pc;
+    a = 5;
+    pa = &a; // адрес первого байта переменной a, например 152-й байт.
+
+    printf("%d", pa); // Вывели 152, а не 5
+
+    // косвенное обращение
+
+    printf("%d", *pa); // Выведет 5
+
+    a = a + 5;
+    a++;
+    *pa = *pa + 5; // Будет работать медленнее, НО
+
+    *pa++; // Сначала выполнится ++, потом взятие адреса *, так делать нельзя.
+
+    (*pa)++; // Это эквивалентно a++;
+}
+
+void fun_1(int a[]) {
+    printf("%d", a[2]);
+}
+
+void fun_2(int *a) {
+    printf("%d", *(a+2);
+}
+
+void fun_3(int *a) {
+    printf("%d", *a);
+}
+
+
+void fun_4(int *a, int k) {
+    int i;
+    for(i = 0; i < k; i++) {
+        printf("%d", *(a + i));
+    }
+}
+
+int main() {
+    int m[5];
+    int *pm;
+    pm = &m[0]; // адрес первого байта 1 элем массива
+    printf("%d", *pm);
+    pm = pm + 1; // m[1];
+
+    fun_1(m);
+    fun_2(&m[0]);
+    fun_3(&m[2]);
+    fun_4(&m[0], 5);
+
+    int m[] = {1, 2, 3};
+    char s[] = "test"; // printf выведет
+    char s_1[] = {'t', 'e', 's', 't'}; // printf не выведет
+    char *53 = "test";
+    int a[3]; // a[0] a[1] a[2]
+    int a_1[3][2];
+    char *c;
+    char *mc[3];
+
+
+    
+}
+

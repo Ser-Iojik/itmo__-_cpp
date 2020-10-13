@@ -4,7 +4,7 @@ using namespace std;
 long long n, result[300000], a[300000], ans;
 void mergeSort(long left, long right) {
     if (left < right) {
-        long mid = (left + right) / 2,invLeft = mid - left +1;
+        long mid = (left + right) / 2, invLeft = mid - left +1;
         mergeSort(left, mid);
         mergeSort(mid + 1, right);
         long i = 0, j = 0;
