@@ -10,14 +10,14 @@ private:
     vector<int> array;
     int size = 0;
 
-    void siftUp(int i){
+    void siftUp(int i){ // Просеивание кучи вверх
         if ((i > 0) && (array[i] < array[(i - 1) / 2])){
             swap(array[i], array[(i - 1) / 2]);
             siftUp((i - 1) / 2);
         }
     }
 
-    void siftDown(int i){
+    void siftDown(int i){ // Просеивание кучи вниз
         int l = 2 * i + 1;
         int r = 2 * i + 2;
         int largest = i;
@@ -31,7 +31,7 @@ private:
         }
     }
 
-    int findKey(int key) {
+    int findKey(int key) { // Поиск индекса для decreaseKey
         for (int i = 0; i < size; i++) {
             if (array[i] == key)
                 return i;
@@ -44,12 +44,12 @@ public:
         array.resize(1000000);
     }
 
-    void push(int key) {
+    void push(int key) { // Добавление элемента во 1 массив
         array[size] = key;
         siftUp(size++);
     }
 
-    int extractMin(){
+    int extractMin(){ // Удаление элемента из 1 массива
         if (size > 0) {
             int value = array[0];
             array[0] = array[--size];
@@ -60,7 +60,7 @@ public:
             return -1000000001;
     }
 
-    void decreaseKey(int key, int newNumber){
+    void decreaseKey(int key, int newNumber){ // свап элементов
         int index = findKey(key);
         array[index] = newNumber;
         siftUp(index);
@@ -69,12 +69,12 @@ public:
 };
 
 int main() {
-    freopen("priorityqueue.in", "r", stdin);
-    freopen("priorityqueue.out", "w", stdout);
+    // freopen("priorityqueue.in", "r", stdin);
+    // freopen("priorityqueue.out", "w", stdout);
 
     PriorityQueue priorit;
 
-    vector<int> key(1000000);
+    vector<int> key(1000000); // Массив для поиска по индексам для функции decreaseKey
 
     string cmd;
     int x, y;
