@@ -1,30 +1,58 @@
 #include <iostream>
+#include <fstream>
 using namespace std;
- 
+
+struct StackNode {
+    int elem; // Элемент в списке
+    StackNode *next; // Указатель на следующий элемент списка
+};
+
+class Stack {
+    private: 
+        StackNode *top; // Конкретно в этом классе берём указатель на верхний элемент
+    public:
+        Stack() {
+            top = NULL; // Говорим что верхний элемент является Null
+        }
+
+        void push(int Num) {
+            StackNode *node = new StackNode(); // Создали новую переменную node нашего типа StackNode
+            node->next = top; // И указатель равен указателю на следующий элемент            
+            node->elem = Num; // Говорим что элемент теперь равен нашему числу
+            top = node; // Записываем всё в верхний элемент(обновляем его)
+        }
+
+        int pop() {
+            int result = top->elem; // В result сохраняем текущий элемент сверху списка с его числом и адресом
+            // В первом случае это будет 10 и его адрес, во втором 1234 с адресом соответственно
+            StackNode *del = top; // Объявляем новую переменную del, в которую записываем адрес для дальнейшего удаления
+            top = top->next; // Перевели указатель на следующий элемент
+            delete del; // Удалили адрес
+            return result; // Вернули результат
+        }
+};
+
 int main() {
-    freopen("stack.in", "r", stdin);
-    freopen("stack.out", "w", stdout);
+    ifstream fin("stack.in");
+    ofstream fout("stack.out");
+
+    Stack Stack;
 
     int M;
-    cin >> M;
-    char Command;
-    int Num;
-    int Del;
-    int Stack[100000];
+    fin >> M;
 
-    for(int i = 0; i < M; i++) {
-        cin >> Command; // Вводим команду + или -
-
-        if(Command == '+') {
-            cin >> Num; // Вводим число
-            Stack[i] = Num; // в самый верх пихаем новое число
+    for (int i = 0; i < M; i++) {
+        string command;
+        fin >> command;
+        if (command == "+") {
+            int Num;
+            fin >> Num;
+            Stack.push(Num);
         } else {
-            Del = Stack[i-1]; // записываем в Del самый верхний элемент
-            i -= 2;
-            M -= 2;
-            cout << Del << '\n'; // Выводим самый верхний элемент
+            fout << Stack.pop() << endl;
         }
     }
+
 
     return 0;
 }
