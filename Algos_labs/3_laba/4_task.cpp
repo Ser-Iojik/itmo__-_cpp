@@ -65,7 +65,6 @@ public:
         array[index] = newNumber;
         siftUp(index);
     }
-
 };
 
 int main() {

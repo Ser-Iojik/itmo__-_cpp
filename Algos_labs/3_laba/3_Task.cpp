@@ -12,7 +12,7 @@ void radixsort(vector<string>& array, int m, int k) {
         vector<int> alph(26, 0);
         int x = array.size();
         for (int j = 0; j < x; j++) {
-            alph[array[j][i] - 'a']++;
+            alph[array[j][i] - 'a']++; // массив индексов от 0 до 25 количество слов заканчивающихся на а
         }
 
         int temp, count = 0;
