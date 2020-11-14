@@ -5,10 +5,10 @@ using namespace std;
 int arr[100000];
 
 int left_search(int x, int N) {
-	int left = -1;
+	int left = -1; // Right = 1 left = 0, Условие не срабатывает, Нулевой элемент массива
 	int right = N;
 	int mid;
-	while (right - left > 1) {
+	while (right - left > 1) { 
 		mid = (right + left) / 2;
 		if (arr[mid] >= x) { // Если средний элемент больше искомого значит искомый находится слева от среднего
 			right = mid;
@@ -18,7 +18,7 @@ int left_search(int x, int N) {
 		}
 	}
 	if (arr[right] == x) return right + 1;
-	return -1;
+		return -1;
 }
 
 int right_search(int x, int N) {
@@ -37,7 +37,7 @@ int right_search(int x, int N) {
 		}
 	}
 	if (arr[left] == x) return left + 1;
-	return -1;
+		return -1;
 }
 
 int main() {
