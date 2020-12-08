@@ -24,7 +24,7 @@ int main() {
         // cin >> key >> leftKid >> rightKid;
 		tree[i].key = key; // int key = 0;
 		if (leftKid != 0) {
-			tree[i].leftKid = &tree[leftKid]; // 
+			tree[i].leftKid = &tree[leftKid];
 			tree[leftKid].parent = &tree[i];
 			tree[leftKid].height = tree[i].height + 1;
 			if (tree[leftKid].height > maxHeight) maxHeight = tree[leftKid].height;
