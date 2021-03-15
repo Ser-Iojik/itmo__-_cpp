@@ -12,7 +12,7 @@ ofstream fout("rotationout.txt");
 typedef int T;
 typedef int L;
 typedef int R;
-typedef int ID;
+// typedef int ID;
 typedef int H;
 
 #define RT(a, b) ((a) > (b))
@@ -27,10 +27,10 @@ struct Node {
     H height;
     L leftkey;
     R rightkey;
-    ID id;
+    // ID id;
 };
 
-int n = 1;
+// int n = 1;
 // Функция создания нового узла
 Node* getFreeNode(T value, Node *parent, L leftkey, R rightkey) {
     Node* tmp = (Node*) malloc(sizeof(Node));
@@ -40,8 +40,8 @@ Node* getFreeNode(T value, Node *parent, L leftkey, R rightkey) {
     tmp->leftkey = leftkey;
     tmp->rightkey = rightkey;
     tmp->height;
-    tmp->id = n;
-    n++;
+    // tmp->id = n;
+    // n++;
     return tmp;
 }
     
@@ -54,7 +54,7 @@ void insert(Node **head, int key, int left, int right) {
         *head = getFreeNode(key, NULL, left, right);
         return;
     }
-  
+
     // Проходим по дереву и ищем место для вставки
     tmp = *head;
     // Пока не дошли до пустого узла

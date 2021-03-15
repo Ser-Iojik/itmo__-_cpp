@@ -1,3 +1,0 @@
-Created files:
-C:\CppDev\itmo_cpp\Programming_labs\Name.txt
-C:\CppDev\itmo_cpp\Programming_labs\b.c

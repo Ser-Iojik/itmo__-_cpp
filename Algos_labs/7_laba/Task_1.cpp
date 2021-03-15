@@ -141,16 +141,16 @@ int balance(int i, vector<Uzel>& root) {
     return Right - Left;
 }
 
-// void preOrderTravers(Node* root, int i) {
-//     if (root) {
-//         if (root->id == i) {
-//             fout << height(root->right) - height(root->left) << endl;
-//             // fout << height(root->right) - height(root->left) << " Data: " << root->data << " ID: " << root->id << endl;
-//         }
-//         preOrderTravers(root->left, i);
-//         preOrderTravers(root->right, i);
-//     }
-// }
+void preOrderTravers(Node* root, int i) {
+    if (root) {
+        if (root->id == i) {
+            fout << height(root->right) - height(root->left) << endl;
+            // fout << height(root->right) - height(root->left) << " Data: " << root->data << " ID: " << root->id << endl;
+        }
+        preOrderTravers(root->left, i);
+        preOrderTravers(root->right, i);
+    }
+}
    
 // функция построения дерева для проверки
 // void printTree(Node *root, const char *dir, int level) {

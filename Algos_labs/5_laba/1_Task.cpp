@@ -17,12 +17,10 @@ int main() {
 	fstream in, out;
 	in.open("height.in", ios::in);
 	in >> N;
-    // cin >> N;
 	if (N == 1) maxHeight = 1;
 	for (int i = 1; i <= N; i++) {
 		in >> key >> leftKid >> rightKid;
-        // cin >> key >> leftKid >> rightKid;
-		tree[i].key = key; // int key = 0;
+		tree[i].key = key;
 		if (leftKid != 0) {
 			tree[i].leftKid = &tree[leftKid];
 			tree[leftKid].parent = &tree[i];

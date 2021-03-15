@@ -1,0 +1,32 @@
+"C:\Program Files\JetBrains\CLion 2020.2.1\bin\cmake\win\bin\cmake.exe" -DCMAKE_BUILD_TYPE=Debug -DCMAKE_MAKE_PROGRAM=C:/cygwin64/bin/make.exe -DCMAKE_C_COMPILER=C:/cygwin64/bin/gcc.exe -DCMAKE_CXX_COMPILER=C:/cygwin64/bin/g++.exe -G "CodeBlocks - MinGW Makefiles" C:\CppDev\itmo_cpp\C
+-- The C compiler identification is unknown
+-- Check for working C compiler: C:/cygwin64/bin/gcc.exe
+-- Check for working C compiler: C:/cygwin64/bin/gcc.exe - broken
+CMake Error at C:/Program Files/JetBrains/CLion 2020.2.1/bin/cmake/win/share/cmake-3.17/Modules/CMakeTestCCompiler.cmake:60 (message):
+  The C compiler
+
+    "C:/cygwin64/bin/gcc.exe"
+
+  is not able to compile a simple test program.
+
+  It fails with the following output:
+
+    Change Dir: C:/CppDev/itmo_cpp/C/cmake-build-debug/CMakeFiles/CMakeTmp
+    
+    Run Build Command(s):C:/cygwin64/bin/make.exe cmTC_22b19/fast && /usr/bin/make  -f CMakeFiles\cmTC_22b19.dir\build.make CMakeFiles/cmTC_22b19.dir/build
+ 
+ 
+     make: *** [Makefile:140: cmTC_22b19/fast] Error 1
+    
+    
+
+  
+
+  CMake will not be able to correctly generate this project.
+Call Stack (most recent call first):
+  CMakeLists.txt:2 (project)
+
+
+-- Configuring incomplete, errors occurred!
+See also "C:/CppDev/itmo_cpp/C/cmake-build-debug/CMakeFiles/CMakeOutput.log".
+See also "C:/CppDev/itmo_cpp/C/cmake-build-debug/CMakeFiles/CMakeError.log".
