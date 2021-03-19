@@ -2,6 +2,8 @@
 #include <utility>
 #include <vector>
 #include <cmath>
+#include <exception>
+#include <stdexcept>
 using namespace std;
 
 struct a_point {
@@ -39,7 +41,7 @@ public:
 
 // Класс Ломаная линия
 class BrokenLine {
-private:
+protected:
     vector<Point> points;
 public:
     // Конструктор для ломаной
@@ -53,24 +55,22 @@ public:
 };
 
 // Класс Замкнутая линия
-class ClosedLine {
-private:
-    vector<Point> points;
+class ClosedLine : public BrokenLine {
 public:
     // Конструктор
-    explicit ClosedLine (vector<Point> v) : points(std::move(v)) {}
+    explicit ClosedLine(vector<Point> points) : BrokenLine(std::move(points)) {}
 
     // Проверка на Замкнутость
-    virtual void CheckClosedLine () {
+    void CheckClosedLine () {
         int n = points.size();
         // Проверяем по координатам первой и последней точки
         if (points[0].x != points[n-1].x || points[0].y != points[n-1].y) {
-            throw "This ClosedLine, doesn't close. Input points again, please!";
+            throw invalid_argument("This ClosedLine, doesn't close. Input points again, please!");
         }
     }
 
     // Конструктор копирования
-    ClosedLine (const ClosedLine &Cl) : points(Cl.points) {}
+    ClosedLine (const ClosedLine &Cl) : BrokenLine(Cl) {}
 
     // Деструктор
     ~ClosedLine () = default;
@@ -91,11 +91,11 @@ public:
         int n = points.size();
         // Проверяем по координатам первой и последней точки
         if (points[0].x != points[n-1].x || points[0].y != points[n-1].y) {
-            throw "This ClosedLine, doesn't close. Input points again, please!";
+            throw invalid_argument("This Polygon, doesn't close. Input points again, please!");
         }
     }
 
-    void measure () {
+    void perimeter () {
         // Длины всех сторон
         vector<int> edge;
         for (int i = 0; i <= points.size()-1; i++) {
@@ -104,14 +104,12 @@ public:
                 float dy = points[0].y - points[i].y;
                 float d = sqrt(dx * dx + dy * dy);
                 edge.push_back(d);
-                // cout << "d" << "_" << i << ": " << d << endl;
                 break;
             }
             float dx = points[i].x - points[i+1].x;
             float dy = points[i].y - points[i+1].y;
             float d = sqrt(dx * dx + dy * dy);
             edge.push_back(d);
-            // cout << "d" << "_" << i << ": " << d << endl;
         }
 
         // Периметр
@@ -120,8 +118,9 @@ public:
             Perimeter += i;
         }
         cout << "Poly perimeter = " << Perimeter << endl;
-
-        // Площадь
+    }
+    // Площадь
+    void square () {
         float group_plus = 0;
         float group_minus = 0;
         float square;
@@ -139,7 +138,7 @@ public:
         cout << "Poly square: " << square << endl;
     }
 
-    char CheckPolygon () {
+    virtual bool CheckPolygon () {
         // (b−a)×(c−a)>0
         // a×b=xayb−yaxb
         
@@ -167,9 +166,12 @@ public:
                 result_minus += 1;
             }
         }
-        if (result_plus == product.size() || result_minus == product.size()) {}
+        if (result_plus == product.size() || result_minus == product.size()) {
+            return true;
+        }
         else {
-            throw "This Polygon, is incorrect. Input points again, please!";
+            throw invalid_argument("This Polygon, is incorrect. Input points again, please!");
+            return false;
         }
     }
 
@@ -177,93 +179,16 @@ public:
     ~Polygon () = default;
 };
 
+// Проверить на одну прямую
 // Класс Треугольник
-class Triangle {
+class Triangle : public Polygon {
 public:
     // Конструктор
-    explicit Triangle (const Polygon& Poly) : Pl(Poly) {}
+    explicit Triangle(vector<Point> v, const Polygon &Poly) : Polygon(std::move(v)), Pl(Poly) {}
 
     // Конструктор копирования
-    Triangle (const Triangle &Trio) : Pl(Trio.Pl) {}
+    Triangle(const Polygon &poly, const Triangle &Trio) : Polygon(poly), Pl(Trio.Pl) {}
 
-    void measure () {
-        // Длины всех сторон
-        vector<int> edge;
-        for (int i = 0; i <= Pl.points.size()-1; i++) {
-            if (i == Pl.points.size()-1) {
-                float dx = Pl.points[0].x - Pl.points[i].x;
-                float dy = Pl.points[0].y - Pl.points[i].y;
-                float d = sqrt(dx * dx + dy * dy);
-                edge.push_back(d);
-                // cout << "d" << "_" << i << ": " << d << endl;
-                break;
-            }
-            float dx = Pl.points[i].x - Pl.points[i+1].x;
-            float dy = Pl.points[i].y - Pl.points[i+1].y;
-            float d = sqrt(dx * dx + dy * dy);
-            edge.push_back(d);
-            // cout << "d" << "_" << i << ": " << d << endl;
-        }
-
-        // Периметр
-        float Perimeter = 0;
-        for (float i : edge) {
-            Perimeter += i;
-            // cout << "Edge = " << edge[i] << " " << i << endl;
-        }
-        cout << "Triangle perimeter = " << Perimeter << endl;
-
-        // Площадь
-        float group_plus = 0;
-        float group_minus = 0;
-        float square;
-        int n = Pl.points.size();
-        for (int i = 0; i <= Pl.points.size()-1; i++) {
-            if (i == Pl.points.size()-1) {
-                group_plus  += Pl.points[i].x * Pl.points[n-1].y;
-                group_minus -= Pl.points[i].y * Pl.points[n-1].x;
-                break;
-            }
-            group_plus  += Pl.points[i].x * Pl.points[i+1].y;
-            group_minus -= Pl.points[i].y * Pl.points[i+1].x;
-        }
-        square = abs(group_plus - group_minus)/2;
-        cout << "Triangle square: " << square << endl;
-    }
-
-    char CheckPolygon () {
-        // (b−a)×(c−a)>0
-        // a×b=xayb−yaxb
-        
-        vector<float> product;
-        a_point a{};
-        b_point b{};
-        
-        for (int i = 0; i+2 <= Pl.points.size()-1; i++) {
-            a.x = Pl.points[i+1].x - Pl.points[i].x;
-            a.y = Pl.points[i+1].y - Pl.points[i].y;
-
-            b.x = Pl.points[i+2].x - Pl.points[i].x;
-            b.y = Pl.points[i+2].y - Pl.points[i].y;
-
-            float ABC = a.x * b.y - a.y * b.x;
-            product.push_back(ABC);
-        }
-
-        float result_plus = 0;
-        float result_minus = 0;
-        for (float i : product) {
-            if (i > 0) {
-                result_plus += 1;
-            } else if (i < 0) {
-                result_minus += 1;
-            }
-        }
-        if (result_plus == product.size() || result_minus == product.size()) {}
-        else {
-            throw "This Triangle, is incorrect. Input points again, please!";
-        }
-    }
     Polygon Pl;
 
     // Деструктор
@@ -271,93 +196,28 @@ public:
 };
 
 // Класс Трапеция
-class Trapezoid {
+class Trapezoid : public Polygon {
 public:
     // Конструктор
-    explicit Trapezoid (const Polygon& Poly) : Pl(Poly) {}
+    explicit Trapezoid(vector<Point> v, const Polygon &Poly) : Polygon(std::move(v)), Pl(Poly) {}
 
     // Конструктор копирования
-    Trapezoid (const Trapezoid &Trap) : Pl(Trap.Pl) {}
+    Trapezoid(const Polygon &poly, const Trapezoid &Trap) : Polygon(poly), Pl(Trap.Pl) {}
 
-    void measure () {
-        // Длины всех сторон
-        vector<int> edge;
-        for (int i = 0; i <= Pl.points.size()-1; i++) {
-            if (i == Pl.points.size()-1) {
-                float dx = Pl.points[0].x - Pl.points[i].x;
-                float dy = Pl.points[0].y - Pl.points[i].y;
-                float d = sqrt(dx * dx + dy * dy);
-                edge.push_back(d);
-                break;
-            }
-            float dx = Pl.points[i].x - Pl.points[i+1].x;
-            float dy = Pl.points[i].y - Pl.points[i+1].y;
-            float d = sqrt(dx * dx + dy * dy);
-            edge.push_back(d);
+    bool CheckPolygon () override {
+        if ( (((points[0].x-points[1].x)*(points[2].y-points[3].y) == 
+        (points[0].y-points[1].y)*(points[2].x-points[3].x)) ||
+        ((points[0].x-points[3].x)*(points[1].y-points[2].y) ==
+        (points[0].y-points[3].y)*(points[1].x-points[2].x))) &&
+        (points[0].x == points[4].x && points[0].y == points[4].y)) {
+                cout << "It's a Trap!" << endl;
+                return true;
+        } else {
+            throw invalid_argument("This Trapezoid, is incorrect. Input points again, please!");
+            return false;
         }
+    } 
 
-        // Периметр
-        float Perimeter = 0;
-        for (float i : edge) {
-            Perimeter += i;
-        }
-        cout << "Trapezoid perimeter = " << Perimeter << endl;
-
-        // Площадь
-        float group_plus = 0;
-        float group_minus = 0;
-        float square;
-        int n = Pl.points.size();
-        for (int i = 0; i <= Pl.points.size()-1; i++) {
-            if (i == Pl.points.size()-1) {
-                group_plus  += Pl.points[i].x * Pl.points[n-1].y;
-                group_minus -= Pl.points[i].y * Pl.points[n-1].x;
-                break;
-            }
-            group_plus  += Pl.points[i].x * Pl.points[i+1].y;
-            group_minus -= Pl.points[i].y * Pl.points[i+1].x;
-        }
-        square = abs(group_plus - group_minus)/2;
-        cout << "Trapezoid square: " << square << endl;
-    }
-
-    char CheckTrapezoid () {
-        // (b−a)×(c−a)>0
-        // a×b=xayb−yaxb
-        
-        vector<float> product;
-        a_point a{};
-        b_point b{};
-        
-        for (int i = 0; i+2 <= Pl.points.size()-1; i++) {
-            a.x = Pl.points[i+1].x - Pl.points[i].x;
-            a.y = Pl.points[i+1].y - Pl.points[i].y;
-
-            b.x = Pl.points[i+2].x - Pl.points[i].x;
-            b.y = Pl.points[i+2].y - Pl.points[i].y;
-
-            float ABC = a.x * b.y - a.y * b.x;
-            product.push_back(ABC);
-        }
-
-        float result_plus = 0;
-        float result_minus = 0;
-        // for (int i = 0; i < product.size(); i++) {
-        for (float i : product) {
-            if (product[i] > 0) {
-                result_plus += 1;
-            } else if (product[i] < 0) {
-                result_minus += 1;
-            }
-        }
-
-        // a_point vector1 = 
-
-        if (result_plus == product.size() || result_minus == product.size()) {}
-        else {
-            throw "This Trapezoid, is incorrect. Input points again, please!";
-        }
-    }
     Polygon Pl;
 
     // Деструктор
@@ -365,97 +225,48 @@ public:
 };
 
 // Класс правильный многоугольник
-class CorrectPolygon {
+class CorrectPolygon : public Polygon {
 public:
     // Конструктор
-    explicit CorrectPolygon (const Polygon& Poly) : Pl(Poly) {}
+    explicit CorrectPolygon(vector<Point> v, const Polygon &Poly) : Polygon(std::move(v)), Pl(Poly) {}
 
     // Конструктор копирования
-    CorrectPolygon (const Trapezoid &Trap) : Pl(Trap.Pl) {}
+    CorrectPolygon(const Polygon &poly, const Trapezoid &Trap) : Polygon(poly), Pl(Trap.Pl) {}
 
-    void measure () {
-        // Длины всех сторон
-        vector<int> edge;
-        for (int i = 0; i <= Pl.points.size()-1; i++) {
-            if (i == Pl.points.size()-1) {
-                float dx = Pl.points[0].x - Pl.points[i].x;
-                float dy = Pl.points[0].y - Pl.points[i].y;
-                float d = sqrt(dx * dx + dy * dy);
-                edge.push_back(d);
-                break;
+    int n = points.size();
+    bool CheckPolygon () override {
+        const double EPS = 0.1; // погрешность
+        bool check = true; 
+
+        float dx = points[0].x - points[n-1].x;
+        float dy = points[0].y - points[n-1].y;
+        float d0 = sqrt(dx * dx + dy * dy);
+
+        for (int i = 0; i < points.size()-1; i++) {
+            float dx = points[i].x - points[i+1].x;
+            float dy = points[i].y - points[i+1].y;
+            float di = sqrt(dx * dx + dy * dy);
+
+            if(fabs(di - d0) > EPS) {
+            check = false;
+            break;
             }
-            float dx = Pl.points[i].x - Pl.points[i+1].x;
-            float dy = Pl.points[i].y - Pl.points[i+1].y;
-            float d = sqrt(dx * dx + dy * dy);
-            edge.push_back(d);
         }
-
-        // Периметр
-        float Perimeter = 0;
-        for (float i : edge) {
-            Perimeter += i;
-        }
-        cout << "CorrectPolygon perimeter = " << Perimeter << endl;
-
-        // Площадь
-        float group_plus = 0;
-        float group_minus = 0;
-        float square;
-        int n = Pl.points.size();
-        for (int i = 0; i <= Pl.points.size()-1; i++) {
-            if (i == Pl.points.size()-1) {
-                group_plus  += Pl.points[i].x * Pl.points[n-1].y;
-                group_minus -= Pl.points[i].y * Pl.points[n-1].x;
-                break;
-            }
-            group_plus  += Pl.points[i].x * Pl.points[i+1].y;
-            group_minus -= Pl.points[i].y * Pl.points[i+1].x;
-        }
-        square = abs(group_plus - group_minus)/2;
-        cout << "CorrectPolygon square: " << square << endl;
+        return check;
     }
 
-    char CheckCorrectPolygon () {
-        // (b−a)×(c−a)>0
-        // a×b=xayb−yaxb
-
-        vector<float> product;
-        a_point a{};
-        b_point b{};
-
-        for (int i = 0; i+2 <= Pl.points.size()-1; i++) {
-            a.x = Pl.points[i+1].x - Pl.points[i].x;
-            a.y = Pl.points[i+1].y - Pl.points[i].y;
-
-            b.x = Pl.points[i+2].x - Pl.points[i].x;
-            b.y = Pl.points[i+2].y - Pl.points[i].y;
-
-            float ABC = a.x * b.y - a.y * b.x;
-            product.push_back(ABC);
-        }
-
-        float result_plus = 0;
-        float result_minus = 0;
-        // for (int i = 0; i < product.size(); i++) {
-        for (float i : product) {
-            if (product[i] > 0) {
-                result_plus += 1;
-            } else if (product[i] < 0) {
-                result_minus += 1;
-            }
-        }
-        if (result_plus == product.size() || result_minus == product.size()) {}
-        else {
-            throw "This Trapezoid, is incorrect. Input points again, please!";
-        }
-    }
     Polygon Pl;
 
     // Деструктор
     ~CorrectPolygon () = default;
 };
+// bool YouITMOstudent() {
+//     return true;
+// }
 
-// Допилить проверку трапеции и многоугольника
+// int WorkForeverUntilYouDie() {
+//     return false;
+// }
 
 int main() {
 
@@ -476,12 +287,7 @@ int main() {
     ClosedLine Cl(ClPoints);
 
     // Проверка Замкнутой Ломаной линии на замкнутость
-    try {  
-        Cl.CheckClosedLine();
-    }
-    catch (const char *str) {
-        cout << str << endl;
-    }
+    try {Cl.CheckClosedLine();}  catch (invalid_argument& e) {cerr << e.what() << endl; return -1;}
 
     vector<Point> PolyPoints;
     PolyPoints.emplace_back();
@@ -491,22 +297,11 @@ int main() {
     PolyPoints.emplace_back();
 
     Polygon Poly(PolyPoints);
-    Poly.measure();
+    Poly.perimeter();
+    Poly.square();
 
-    try {  
-        Poly.CheckClosedLine();
-    }
-    catch (const char *str) {
-        cout << str << endl;
-    }
-
-    // Проверка Полигона на выпуклость
-    try {  
-        Poly.CheckPolygon();
-    }
-    catch (const char *str) {
-        cout << str << endl;
-    }
+    try {Poly.CheckClosedLine();}  catch (invalid_argument& e) {cerr << e.what() << endl; return -1;}
+    try {Poly.CheckPolygon();}     catch (invalid_argument& e) {cerr << e.what() << endl; return -1;}
 
     vector<Point> TrioPoints;
     TrioPoints.emplace_back();
@@ -515,8 +310,16 @@ int main() {
     TrioPoints.emplace_back();
 
     Polygon  TrioPoly(TrioPoints);
-    Triangle Trio(TrioPoly);
-    Trio.measure();
+    Triangle Trio(TrioPoints ,TrioPoly);
+    Trio.perimeter();
+    Trio.square();
+
+    try {Trio.CheckClosedLine();}  catch (invalid_argument& e) {cerr << e.what() << endl; return -1;}
+    try {Trio.CheckPolygon();}     catch (invalid_argument& e) {cerr << e.what() << endl; return -1;}
+
+// while (YouITMOstudent()) {
+//     return WorkForeverUntilYouDie();
+// }
 
     vector<Point> TrapPoints;
     TrapPoints.emplace_back();
@@ -525,9 +328,12 @@ int main() {
     TrapPoints.emplace_back(8, 0);
     TrapPoints.emplace_back();
 
-    Polygon  TrapPoly(TrapPoints);
-    Trapezoid Trap(TrapPoly);
-    Trap.measure();
+    Polygon   TrapPoly(TrapPoints);
+    Trapezoid Trap(TrapPoints, TrapPoly);
+    Trap.perimeter();
+    Trap.square();
+    try {Trap.CheckClosedLine();}  catch (invalid_argument& e) {cerr << e.what() << endl; return -1;}
+    try {Trap.CheckPolygon();}     catch (invalid_argument& e) {cerr << e.what() << endl; return -1;}
 
     vector<Point> CorrectPolyPoints;
     CorrectPolyPoints.emplace_back();
@@ -536,9 +342,18 @@ int main() {
     CorrectPolyPoints.emplace_back(8, 0);
     CorrectPolyPoints.emplace_back();
 
-    Polygon  Correct(CorrectPolyPoints);
-    CorrectPolygon CorrectPoly(Correct);
-    CorrectPoly.measure();
+    Polygon        Correct(CorrectPolyPoints);
+    CorrectPolygon CorrectPoly(CorrectPolyPoints, Correct);
+    CorrectPoly.perimeter();
+    CorrectPoly.square();
+    try {CorrectPoly.CheckClosedLine();}  catch (invalid_argument& e) {cerr << e.what() << endl; return -1;}
+    try {CorrectPoly.CheckPolygon();}     catch (invalid_argument& e) {cerr << e.what() << endl; return -1;}
+
+    if (CorrectPoly.CheckPolygon()) {
+        cout << "CorrectPoly correct" << endl;
+    } else {
+        cout << "CorrectPoly not correct" << endl;
+    }
 
 //    Справочные материалы
 //    push_back добавляет копию объекта (или обеспечивает перемещение, если возможно),

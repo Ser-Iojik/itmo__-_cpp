@@ -9,8 +9,14 @@
 C:/CppDev/itmo_cpp/Proga_labs_cpp/1_laba/main.cpp
 iostream
 -
+utility
+-
 vector
 -
 cmath
+-
+exception
+-
+stdexcept
 -
 

@@ -3,6 +3,7 @@
         "cstdlib": "cpp",
         "vector": "cpp",
         "xstring": "cpp",
-        "xlocale": "cpp"
+        "xlocale": "cpp",
+        "stdexcept": "cpp"
     }
 }
