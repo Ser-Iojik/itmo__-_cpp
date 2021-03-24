@@ -97,7 +97,7 @@ public:
 
     void perimeter () {
         // Длины всех сторон
-        vector<int> edge;
+        vector<float> edge;
         for (int i = 0; i <= points.size()-1; i++) {
             if (i == points.size()-1) {
                 float dx = points[0].x - points[i].x;
@@ -260,11 +260,12 @@ public:
     // Деструктор
     ~CorrectPolygon () = default;
 };
+
 // bool YouITMOstudent() {
 //     return true;
 // }
 
-// int WorkForeverUntilYouDie() {
+// bool WorkForeverUntilYouDie() {
 //     return false;
 // }
 
