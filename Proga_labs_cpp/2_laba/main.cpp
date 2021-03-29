@@ -14,10 +14,9 @@ using namespace std;
 // printMultiplicationDivision() для операций *, /
 
 class Polynom {
-private:
+protected:
 public:
     vector<float> k;
-    vector<vector<float>> k2;
     int size1;
     int size2;
 
@@ -25,18 +24,18 @@ public:
 
     explicit Polynom (vector<float> coef) : k(std::move(coef)) {}
 
-    explicit Polynom (vector<float> coef1, vector<float> coef2) {
-        size1 = coef1.size();
-        size2 = coef2.size();
-        k2.resize(2);
+    // explicit Polynom (vector<float> coef1, vector<float> coef2) {
+    //     size1 = coef1.size();
+    //     size2 = coef2.size();
+    //     k2.resize(2);
 
-        for (int i = 0; i < size1; i++) {
-            k2[0].emplace_back(coef1[i]);
-        }
-        for (int i = 0; i < size2; i++) {
-            k2[1].emplace_back(coef2[i]);
-        }
-    }
+    //     for (int i = 0; i < size1; i++) {
+    //         k2[0].emplace_back(coef1[i]);
+    //     }
+    //     for (int i = 0; i < size2; i++) {
+    //         k2[1].emplace_back(coef2[i]);
+    //     }
+    // }
 
     // Перегрузка оператора =
     Polynom& operator = (const Polynom& Poly) {
@@ -100,143 +99,143 @@ public:
         }
     }
 
-    void printDuo() {
-        for (int i = 0; i < 2; i++) {
-            for (int j = 0; j < k2[i].size(); j++) {
-                if (k2[i][j] == 0) {
-                    continue;
-                }
-                if (k2[i][j] == 1 && j == 0) {
-                    cout << 1 << " "; 
-                    if (j != k2[i].size()-1) {
-                        cout << "+ ";
-                    }
-                    continue;
-                }
-                if (k2[i][j] == 1) {
-                    cout << "x" << "^" << j << " ";
-                    if (j != k2[i].size()-1) {
-                        cout << "+ ";
-                    }
-                    continue;
-                }
-                if (j == 0) {
-                    cout << k2[i][j] << " ";
-                    if (j != k2[i].size()-1) {
-                        cout << "+ ";
-                    }
-                    continue;
-                }
-                if (j == 1) {
-                    cout << k2[i][j] << "x" << " ";
-                    if (j != k2[i].size()-1) {
-                        cout << "+ ";
-                    }
-                    continue;
-                }
-                cout << k2[i][j] << "x" << "^" << j << " ";
-                if (j != k2[i].size()-1) {
-                    cout << "+ ";
-                }
-            }
-            if (i < k2.size()-1) {
-                cout << "+ ";
-            }
-        }
-    }
+    // void printDuo() {
+    //     for (int i = 0; i < 2; i++) {
+    //         for (int j = 0; j < k2[i].size(); j++) {
+    //             if (k2[i][j] == 0) {
+    //                 continue;
+    //             }
+    //             if (k2[i][j] == 1 && j == 0) {
+    //                 cout << 1 << " "; 
+    //                 if (j != k2[i].size()-1) {
+    //                     cout << "+ ";
+    //                 }
+    //                 continue;
+    //             }
+    //             if (k2[i][j] == 1) {
+    //                 cout << "x" << "^" << j << " ";
+    //                 if (j != k2[i].size()-1) {
+    //                     cout << "+ ";
+    //                 }
+    //                 continue;
+    //             }
+    //             if (j == 0) {
+    //                 cout << k2[i][j] << " ";
+    //                 if (j != k2[i].size()-1) {
+    //                     cout << "+ ";
+    //                 }
+    //                 continue;
+    //             }
+    //             if (j == 1) {
+    //                 cout << k2[i][j] << "x" << " ";
+    //                 if (j != k2[i].size()-1) {
+    //                     cout << "+ ";
+    //                 }
+    //                 continue;
+    //             }
+    //             cout << k2[i][j] << "x" << "^" << j << " ";
+    //             if (j != k2[i].size()-1) {
+    //                 cout << "+ ";
+    //             }
+    //         }
+    //         if (i < k2.size()-1) {
+    //             cout << "+ ";
+    //         }
+    //     }
+    // }
 
-    void printMultiplication() {
-        int n = k.size();
-        for (int i = 0; i < n; i++) {
-            if (k[i] == 0) {
-                continue;
-            }
-            if (k[i] == 1 && i == 0) {
-                cout << 1 << " ";
-                if (i != n-1) {
-                    cout << "+ ";
-                }
-                continue;
-            }
-            if (k[i] == 1) {
-                cout << "x" << "^" << i*2 << " "; 
-                if (i != n-1) {
-                    cout << "+ ";
-                }
-                continue;
-            }
-            if (i == 0) {
-                cout << k[i] << " ";
-                if (i != n-1) {
-                    cout << "+ ";
-                }
-                continue;
-            }
-            if (i == 1) {
-                cout << k[i] << "x" << "^" << i*2 << " ";
-                if (i != n-1) {
-                    cout << "+ ";
-                }
-                continue;
-            }
-            cout << k[i] << "x" << "^" << i*2 << " ";
-            if (i != n-1) {
-                cout << "+ ";
-            }
-        }
-    }
+    // void printMultiplication() {
+    //     int n = k.size();
+    //     for (int i = 0; i < n; i++) {
+    //         if (k[i] == 0) {
+    //             continue;
+    //         }
+    //         if (k[i] == 1 && i == 0) {
+    //             cout << 1 << " ";
+    //             if (i != n-1) {
+    //                 cout << "+ ";
+    //             }
+    //             continue;
+    //         }
+    //         if (k[i] == 1) {
+    //             cout << "x" << "^" << i*2 << " "; 
+    //             if (i != n-1) {
+    //                 cout << "+ ";
+    //             }
+    //             continue;
+    //         }
+    //         if (i == 0) {
+    //             cout << k[i] << " ";
+    //             if (i != n-1) {
+    //                 cout << "+ ";
+    //             }
+    //             continue;
+    //         }
+    //         if (i == 1) {
+    //             cout << k[i] << "x" << "^" << i*2 << " ";
+    //             if (i != n-1) {
+    //                 cout << "+ ";
+    //             }
+    //             continue;
+    //         }
+    //         cout << k[i] << "x" << "^" << i*2 << " ";
+    //         if (i != n-1) {
+    //             cout << "+ ";
+    //         }
+    //     }
+    // }
     
-    void printDuoMultiplicationDivision(string str) {
-        for (int i = 0; i < 2; i++) {
-            cout << "(";
-            for (int j = 0; j < k2[i].size(); j++) {
-                if (k2[i][j] == 0) {
-                    continue;
-                }
-                if (k2[i][j] == 1 && j == 0) {
-                    cout << 1 << " "; 
-                    if (j != k2[i].size()-1) {
-                        cout << "+ ";
-                    }
-                    continue;
-                }
-                if (k2[i][j] == 1) {
-                    cout << "x" << "^" << j << " ";
-                    if (j != k2[i].size()-1) {
-                        cout << "+ ";
-                    }
-                    continue;
-                }
-                if (j == 0) {
-                    cout << k2[i][j] << " ";
-                    if (j != k2[i].size()-1) {
-                        cout << "+ ";
-                    }
-                    continue;
-                }
-                if (j == 1) {
-                    cout << k2[i][j] << "x" << " ";
-                    if (j != k2[i].size()-1) {
-                        cout << "+ ";
-                    }
-                    continue;
-                }
-                cout << k2[i][j] << "x" << "^" << j;
-                if (j != k2[i].size()-1) {
-                    cout << "+ ";
-                }
-                if (j == k2[i].size()-1) {
-                    cout << ") ";
-                }
-            }
-            if (i < k2.size()-1 && str == "*") {
-                cout << "* ";
-            }
-            if (i < k2.size()-1 && str == "/") {
-                cout << "/ ";
-            }
-        }
-    }
+    // void printDuoMultiplicationDivision(string str) {
+    //     for (int i = 0; i < 2; i++) {
+    //         cout << "(";
+    //         for (int j = 0; j < k2[i].size(); j++) {
+    //             if (k2[i][j] == 0) {
+    //                 continue;
+    //             }
+    //             if (k2[i][j] == 1 && j == 0) {
+    //                 cout << 1 << " "; 
+    //                 if (j != k2[i].size()-1) {
+    //                     cout << "+ ";
+    //                 }
+    //                 continue;
+    //             }
+    //             if (k2[i][j] == 1) {
+    //                 cout << "x" << "^" << j << " ";
+    //                 if (j != k2[i].size()-1) {
+    //                     cout << "+ ";
+    //                 }
+    //                 continue;
+    //             }
+    //             if (j == 0) {
+    //                 cout << k2[i][j] << " ";
+    //                 if (j != k2[i].size()-1) {
+    //                     cout << "+ ";
+    //                 }
+    //                 continue;
+    //             }
+    //             if (j == 1) {
+    //                 cout << k2[i][j] << "x" << " ";
+    //                 if (j != k2[i].size()-1) {
+    //                     cout << "+ ";
+    //                 }
+    //                 continue;
+    //             }
+    //             cout << k2[i][j] << "x" << "^" << j;
+    //             if (j != k2[i].size()-1) {
+    //                 cout << "+ ";
+    //             }
+    //             if (j == k2[i].size()-1) {
+    //                 cout << ") ";
+    //             }
+    //         }
+    //         if (i < k2.size()-1 && str == "*") {
+    //             cout << "* ";
+    //         }
+    //         if (i < k2.size()-1 && str == "/") {
+    //             cout << "/ ";
+    //         }
+    //     }
+    // }
     
     ~Polynom() = default;
 };
@@ -248,27 +247,7 @@ bool operator != (Polynom Poly1, Polynom Poly2) {
     return Poly1.k != Poly2.k;
 }
 
-Polynom operator + (Polynom Poly1, Polynom Poly2) {
-    Polynom Plus(Poly1.k, Poly2.k);
-    Plus.printDuo();
-}
-
-Polynom operator - (Polynom Poly1, const Polynom& Poly2) {
-    int size = Poly2.k.size();
-
-    vector<float> res(size);
-    for (int i = 0; i < res.size(); i++) {
-        res[i] == 0;
-    }
-    for (int i = 0; i < size; i++) {
-        res[i] -= Poly2.k[i];
-    }
-
-    Polynom Minus(Poly1.k, res);
-    Minus.printDuo();
-}
-
-Polynom operator += (const Polynom& Poly1, const Polynom& Poly2) {
+Polynom operator + (const Polynom& Poly1, const Polynom& Poly2) {
     int max_size = max(Poly1.k.size(), Poly2.k.size());
     int size1 = Poly1.k.size();
     int size2 = Poly2.k.size();
@@ -283,11 +262,10 @@ Polynom operator += (const Polynom& Poly1, const Polynom& Poly2) {
     for (int i = 0; i < size2; i++) {
         res[i] += Poly2.k[i];
     }
-    Polynom(res).print();
     return Polynom(res);
 }
 
-Polynom operator -= (const Polynom& Poly1, const Polynom& Poly2) {
+Polynom operator - (const Polynom& Poly1, const Polynom& Poly2) {
     int max_size = max(Poly1.k.size(), Poly2.k.size());
     int size1 = Poly1.k.size();
     int size2 = Poly2.k.size();
@@ -302,26 +280,10 @@ Polynom operator -= (const Polynom& Poly1, const Polynom& Poly2) {
     for (int i = 0; i < size2; i++) {
         res[i] -= Poly2.k[i];
     }
-    Polynom(res).print();
     return Polynom(res);
 }
 
-Polynom operator - (const Polynom& Poly) {
-    int size = Poly.k.size();
-
-    vector<float> res(size);
-    for (int i = 0; i < res.size(); i++) {
-        res[i] == 0;
-    }
-    for (int i = 0; i < size; i++) {
-        res[i] -= Poly.k[i];
-    }
-
-    Polynom(res).print();
-    return Polynom(res);
-}
-
-Polynom operator *= (const Polynom& Poly1, const Polynom& Poly2) {
+Polynom operator += (Polynom& Poly1, const Polynom& Poly2) {
     int max_size = max(Poly1.k.size(), Poly2.k.size());
     int size1 = Poly1.k.size();
     int size2 = Poly2.k.size();
@@ -334,13 +296,64 @@ Polynom operator *= (const Polynom& Poly1, const Polynom& Poly2) {
         res[i] += Poly1.k[i];
     }
     for (int i = 0; i < size2; i++) {
-        res[i] *= Poly2.k[i];
+        res[i] += Poly2.k[i];
     }
-    Polynom(res).printMultiplication();
-    return Polynom(res);
+    return Poly1 = Polynom(res);
 }
 
-Polynom operator /= (const Polynom& Poly, float g) {
+Polynom operator -= (Polynom& Poly1, const Polynom& Poly2) {
+    int max_size = max(Poly1.k.size(), Poly2.k.size());
+    int size1 = Poly1.k.size();
+    int size2 = Poly2.k.size();
+
+    vector<float> res(max_size);
+    for (int i = 0; i < res.size(); i++) {
+        res[i] == 0;
+    }
+    for (int i = 0; i < size1; i++) {
+        res[i] += Poly1.k[i];
+    }
+    for (int i = 0; i < size2; i++) {
+        res[i] -= Poly2.k[i];
+    }
+    return Poly1 = Polynom(res);
+}
+
+Polynom operator - (Polynom& Poly) {
+    int size = Poly.k.size();
+
+    vector<float> res(size);
+    for (int i = 0; i < res.size(); i++) {
+        res[i] == 0;
+    }
+    for (int i = 0; i < size; i++) {
+        res[i] -= Poly.k[i];
+    }
+    return Poly = Polynom(res);
+}
+
+Polynom operator *= (Polynom& Poly1, const Polynom& Poly2) {
+    int max_size = max(Poly1.k.size(), Poly2.k.size());
+    int size1 = Poly1.k.size();
+    int size2 = Poly2.k.size();
+
+    vector<float> res(size1*size2);
+    for (int i = 0; i < res.size(); i++) {
+        res[i] == 0;
+    }
+    for (int i = 0; i < size1; i++) {
+        for (int j = 0; j < size2; j++) {
+            for (int k = 0; k < 1; k++) {
+                k += i + j;
+                res[k] += Poly1.k[i] * Poly2.k[j];
+                k -= i - j;
+            }
+        }
+    }
+    return Poly1 = Polynom(res);
+}
+
+Polynom operator /= (Polynom& Poly, float g) {
     int size = Poly.k.size();
 
     vector<float> res(size);
@@ -353,18 +366,43 @@ Polynom operator /= (const Polynom& Poly, float g) {
     for (int i = 0; i < size; i++) {
         res[i] /= g;
     }
-    Polynom(res).print();
+    return Poly = Polynom(res);
+}
+
+Polynom operator * (const Polynom& Poly1, const Polynom& Poly2) {
+    int max_size = max(Poly1.k.size(), Poly2.k.size());
+    int size1 = Poly1.k.size();
+    int size2 = Poly2.k.size();
+
+    vector<float> res(size1*size2);
+    for (int i = 0; i < res.size(); i++) {
+        res[i] == 0;
+    }
+    for (int i = 0; i < size1; i++) {
+        for (int j = 0; j < size2; j++) {
+            for (int k = 0; k < 1; k++) {
+                k += i + j;
+                res[k] += Poly1.k[i] * Poly2.k[j];
+                k -= i - j;
+            }
+        }
+    }
     return Polynom(res);
 }
 
-Polynom operator * (Polynom Poly1, Polynom Poly2) {
-    Polynom Multiplication(Poly1.k, Poly2.k);
-    Multiplication.printDuoMultiplicationDivision("*");
-}
-
-Polynom operator / (Polynom Poly1, Polynom Poly2) {
-    Polynom Multiplication(Poly1.k, Poly2.k);
-    Multiplication.printDuoMultiplicationDivision("/");
+Polynom operator / (const Polynom& Poly, float g) {
+    int size = Poly.k.size();
+    vector<float> res(size);
+    for (int i = 0; i < res.size(); i++) {
+        res[i] == 0;
+    }
+    for (int i = 0; i < size; i++) {
+        res[i] += Poly.k[i];
+    }
+    for (int i = 0; i < size; i++) {
+        res[i] /= g;
+    }
+    return Polynom(res);
 }
 
 float& Polynom::operator[] (const int index) {
@@ -411,37 +449,55 @@ int main() {
     cout << endl << "Op_!=" << endl << b2 << endl;
 
 
-    // Задание 3
+    // Задание 3 fixed
     cout << endl << "Op_+" << endl;
     Polynom Poly3 = Poly1 + Poly2;
+    Poly3.print();
 
     cout << endl << "Op_-" << endl;
     Polynom Poly4 = Poly1 - Poly2;
+    Poly4.print();
 
     cout << endl << "Op_+=" << endl;
-    Polynom Poly5 = Poly1 += Poly2;
+    Poly1 += Poly2;
+    Poly1.print();
+    Poly1 -= Poly2; // Вернули на место
+
 
     cout << endl << "Op_-=" << endl;
-    Polynom Poly6 = Poly1 -= Poly2;
+    Poly1 -= Poly2;
+    Poly1.print();
+    Poly1 += Poly2; // Вернули на место
 
     cout << endl << "Op_Un-" << endl;
-    Polynom UnMinus = -Poly1;
+    -Poly1;
+    Poly1.print();
 
 
     // Задание 4
     cout << endl;
+
+    Polynom Poly5(k1);
+    Polynom Poly6(k2);
+
     cout << endl << "Op_*=" << endl;
-    Polynom Poly7 = Poly1 *= Poly2;
+    Poly5 *= Poly6;
+    Poly5.print();
 
     cout << endl << "Op_/=" << endl;
-    Polynom Poly8 = Poly1 /= 2;
+    Poly6 /= 2;
+    Poly6.print();
+
+    Polynom Poly7(k1);
+    Polynom Poly8(k2);
 
     cout << endl << "Op_*" << endl;
-    Polynom Poly9 = Poly1 * Poly2;
+    Polynom Poly9 = Poly7 * Poly8;
+    Poly9.print();
 
     cout << endl << "Op_/" << endl;
-    Polynom Poly10 = Poly1 / Poly2;
-
+    Polynom Poly10 = Poly7 / 2;
+    Poly10.print();
 
     // Задание 5
     cout << endl;
@@ -451,11 +507,12 @@ int main() {
     Poly11.print();
     cout << endl << "Op_>>" << endl;
     Poly11 >> 3;
+    
 
     // Задание 6
     cout << endl << "Op_[]" << endl;
     int index = 2;
-    cout << Poly11[index] << "x" << "^" << index;
+    cout << Poly11[index];
 
     return 0;
 }
