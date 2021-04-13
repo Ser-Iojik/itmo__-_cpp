@@ -42,6 +42,8 @@
         "xlocnum": "cpp",
         "xmemory": "cpp",
         "xstddef": "cpp",
-        "xtr1common": "cpp"
+        "xtr1common": "cpp",
+        "sstream": "cpp",
+        "unordered_map": "cpp"
     }
 }

@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+
+<dataset>
+  <transport_station>
+    <number>1</number>
+    <type_of_vehicle>tr</type_of_vehicle>
+    <object_type>Остановка</object_type>
+    <name_stopping>Авангардная ул.</name_stopping>
+    <the_official_name>Авангардная ул.</the_official_name>
+    <location>Авангардная, Ветеранов</location>
+    <routes>52</routes>
+    <coordinates>59.833222,30.182669</coordinates>
+  </transport_station>
+
+    <transport_station>
+    <number>2</number>
+    <type_of_vehicle>tr</type_of_vehicle>
+    <object_type>Остановка</object_type>
+    <name_stopping>Авангардная ул.</name_stopping>
+    <the_official_name>Авангардная ул.</the_official_name>
+    <location>Авангардная, Ветеранов</location>
+    <routes>52</routes>
+    <coordinates>59.833222,30.182669</coordinates>
+  </transport_station>
+
+    <transport_station>
+    <number>1</number>
+    <type_of_vehicle>tr</type_of_vehicle>
+    <object_type>Остановка</object_type>
+    <name_stopping>Авангардная ул.</name_stopping>
+    <the_official_name>Авангардная ул.</the_official_name>
+    <location>Авангардная, Ветеранов</location>
+    <routes>54</routes>
+    <coordinates>59.833222,30.182669</coordinates>
+  </transport_station>
+
+    <transport_station>
+    <number>2</number>
+    <type_of_vehicle>tr</type_of_vehicle>
+    <object_type>Остановка</object_type>
+    <name_stopping>Авангардная ул.</name_stopping>
+    <the_official_name>Авангардная ул.</the_official_name>
+    <location>Авангардная, Ветеранов</location>
+    <routes>55</routes>
+    <coordinates>59.833222,30.182669</coordinates>
+  </transport_station>
+
+
+
+  <transport_station>
+    <number>3</number>
+    <type_of_vehicle>avt</type_of_vehicle>
+    <object_type>Остановка</object_type>
+    <name_stopping>Авангардная ул.</name_stopping>
+    <the_official_name>Авангардная ул.</the_official_name>
+    <location>Ветеранов пр., Авангардная ул.</location>
+    <routes>476</routes>
+    <coordinates>59.833108,30.182092</coordinates>
+  </transport_station>
+
+    <transport_station>
+    <number>3</number>
+    <type_of_vehicle>avt</type_of_vehicle>
+    <object_type>Остановка</object_type>
+    <name_stopping>Авангардная ул.</name_stopping>
+    <the_official_name>Авангардная ул.</the_official_name>
+    <location>Ветеранов пр., Авангардная ул.</location>
+    <routes>476</routes>
+    <coordinates>59.833108,30.182092</coordinates>
+  </transport_station>
+
+
+
+    <transport_station>
+    <number>3</number>
+    <type_of_vehicle>avt</type_of_vehicle>
+    <object_type>Остановка</object_type>
+    <name_stopping>Авангардная ул.</name_stopping>
+    <the_official_name>Авангардная ул.</the_official_name>
+    <location>Ветеранов пр., Авангардная ул.</location>
+    <routes>473</routes>
+    <coordinates>59.833108,30.182092</coordinates>
+  </transport_station>
+      <transport_station>
+    <number>3</number>
+    <type_of_vehicle>avt</type_of_vehicle>
+    <object_type>Остановка</object_type>
+    <name_stopping>Авангардная ул.</name_stopping>
+    <the_official_name>Авангардная ул.</the_official_name>
+    <location>Ветеранов пр., Авангардная ул.</location>
+    <routes>476</routes>
+    <coordinates>59.833108,30.182092</coordinates>
+  </transport_station>
+  <transport_station>
+    <number>3</number>
+    <type_of_vehicle>avt</type_of_vehicle>
+    <object_type>Остановка</object_type>
+    <name_stopping>Авангардная ул.</name_stopping>
+    <the_official_name>Авангардная ул.</the_official_name>
+    <location>Ветеранов пр., Авангардная ул.</location>
+    <routes>473</routes>
+    <coordinates>59.833108,30.182092</coordinates>
+  </transport_station>
+</dataset>
