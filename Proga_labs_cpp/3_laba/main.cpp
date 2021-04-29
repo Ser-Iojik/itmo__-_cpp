@@ -1,122 +1,166 @@
-//#include "libs/pugixml/src/pugixml.hpp"
 #include "libs/pugixml/src/pugixml.cpp"
+#include <math.h>
 #include <iostream>
-#include <unordered_map>
 #include <string>
-#include <vector>
+#include <unordered_map>
+#include <ciso646>
 #include <algorithm>
-#include <iterator>
-#include <clocale>
+#include <set>
+#include <map>
+#include <vector>
+#include <locale>
+
 using namespace std;
 
-void show(pair<int, string> p) {
-    cout << p.first << "->" << p.second << " ";
-}
+class Transport {
+private:
+    wstring type;
+public:
+    Transport(wstring current_type_of_vehicle) : type(current_type_of_vehicle) {}
 
-int ctoi(char c){
-    return c - '0';
-}
+    void max_route(pugi::xml_document& data) {
+        pugi::xml_node main_node = data.first_child();
+        wstring transport;
+        wstring route;
+        unordered_map<wstring, int> route_stops;
+        pair<wstring, int> max_route({ L"none", 0 });
+        for (pugi::xml_node node1 = main_node.first_child(); node1; node1 = node1.next_sibling()) {
+            for (pugi::xml_node node2 = node1.first_child(); node2; node2 = node2.next_sibling()) {
+                wstring name = node2.name();
+                wstring value = node2.child_value();
 
-typedef unordered_map<string, string> numbersMap;
-typedef unordered_map<string, int> countMap;
-int main() {
-    setlocale(LC_ALL, "Rus");
-
-    pugi::xml_document doc;
-    pugi::xml_parse_result result = doc.load_file("test.xml");
-
-    if (!result)  
-        return -1;
-
-    vector<wstring> str;
-    int i = 1;
-    unordered_map<int, string> numbersMap;
-    unordered_map<int, int> countMap;
-
-    for (pugi::xml_node transport_station = doc.child("dataset").child("transport_station"); transport_station; transport_station = transport_station.next_sibling("transport_station")) {
-        wstring tr = transport_station.child_value(L"type_of_vehicle");
-        string routes = transport_station.child_value("routes");
-        
-        // int numberOfTr = stoi(routes);
-
-        for (int i = 0; i < routes.size(); i++) {
-            
-            if ((routes[i] >= '0' && routes[i] <= '9') && (routes[i+1] == ',' || routes[i+1] == '.' || routes[i+1] == '\0')) {
-                if (!(routes[i-1] >= '0' && routes[i-1] <= '9')) {
-                    // cout << routes << "= " << routes[i] << endl;
-                    int numberOfTr = ctoi(routes[i]);
-                    // cout << numberOfTr << endl;
-
-                    /* подсчёт остановок */
-                    numbersMap.insert(make_pair(numberOfTr, tr));
-                    if (numbersMap.count(numberOfTr) == 1) {
-                        // cout << numberOfTr << " " << endl;
-                        if (countMap.find(numberOfTr) != countMap.end()) {
-                            countMap[numberOfTr] += 1;
-                            // cout << "true: " << numberOfTr << " " << tr << " " << countMap[numberOfTr] << endl;
-                        } else {
-                            countMap.insert(make_pair(numberOfTr, 1));
-                            // cout << "false: "  << numberOfTr << " " << tr << " " << 1 << endl;
-                        }
-                    }
-                    /* подсчёт остановок */
+                if (name == L"type_of_vehicle") {
+                    transport = value;
                 }
-            }
 
-            if ((routes[i-1] >= '0' && routes[i-1] <= '9' && routes[i] >= '0' && routes[i] <= '9') && (routes[i+1] == ',' || routes[i+1] == '.' || routes[i+1] == '\0')) {
-                if (!(routes[i-2] >= '0' && routes[i-2] <= '9')) {
-                    // cout << routes << "= " << routes[i-1] << " " << routes[i] << endl;
-                    auto numberOfRoute = std::string(1,routes[i-1]) + routes[i];
-                    int numberOfTr = stoi(numberOfRoute);
-                    // cout << numberOfTr << endl;
-
-                    /* подсчёт остановок */
-                    numbersMap.insert(make_pair(numberOfTr, tr));
-                    if (numbersMap.count(numberOfTr) == 1) {
-                        // cout << numberOfTr << " " << endl;
-                        if (countMap.find(numberOfTr) != countMap.end()) {
-                            countMap[numberOfTr] += 1;
-                            // cout << "true: " << numberOfTr << " " << tr << " " << countMap[numberOfTr] << endl;
-                        } else {
-                            countMap.insert(make_pair(numberOfTr, 1));
-                            // cout << "false: "  << numberOfTr << " " << tr << " " << 1 << endl;
+                if (name == L"routes" and transport == type) {
+                    for (int i = 0; value[i] != '\0'; i++) {
+                        if (value[i] == '.' or value[i] == ',' or value[i + 1] == '\0') {
+                            route_stops[route] += 1;
+                            if (route_stops[route] > max_route.second) {
+                                max_route.first = route;
+                                max_route.second = route_stops[route];
+                            }
+                            route = L"";
+                        }
+                        else {
+                            route += value[i];
                         }
                     }
-                    /* подсчёт остановок */
-                }
-            }
-
-            if (routes[i-2] >= '0' && routes[i-2] <= '9' && routes[i-1] >= '0' && routes[i-1] <= '9' && routes[i] >= '0' && routes[i] <= '9' && (routes[i+1] == ',' || routes[i+1] == '.' || routes[i+1] == '\0')) {
-                if (!(routes[i-3] >= '0' && routes[i-3] <= '9')) {
-                    // cout << routes << "= " << routes[i-2] << " " << routes[i-1] << routes[i] << endl;
-                    auto numberOfRoute = std::string(1,routes[i-2]) + routes[i-1] + routes[i];
-                    int numberOfTr = stoi(numberOfRoute);
-                    // cout << numberOfTr << endl;
-
-                    /* подсчёт остановок */
-                    numbersMap.insert(make_pair(numberOfTr, tr));
-                    if (numbersMap.count(numberOfTr) == 1) {
-                        // cout << numberOfTr << " " << endl;
-                        if (countMap.find(numberOfTr) != countMap.end()) {
-                            countMap[numberOfTr] += 1;
-                            // cout << "true: " << numberOfTr << " " << tr << " " << countMap[numberOfTr] << endl;
-                        } else {
-                            countMap.insert(make_pair(numberOfTr, 1));
-                            // cout << "false: "  << numberOfTr << " " << tr << " " << 1 << endl;
-                        }
-                    }
-                    /* подсчёт остановок */
                 }
             }
         }
-
-
+        wcout << L"Route with the most stops: " << max_route.first << endl;
     }
 
-    // for (auto x : numbersMap)
-    //     cout << x.first << " " << x.second << endl;
-    // cout << endl;
-    for (auto x : countMap)
-        cout << x.first << " " << x.second << endl;
+    pair<double, double> make_coordinates(const string& coordinates) {
+        string latitude;
+        string longitude;
+        int i;
+        for (i = 0; coordinates[i] != ','; i++) {
+            latitude += coordinates[i];
+        }
+        i++;
+        for (; coordinates[i] != '\0'; i++) {
+            longitude += coordinates[i];
+        }
+        return { atof(latitude.c_str()), atof(longitude.c_str()) };
+    }
 
+    double distance(pair<double, double> c1, pair<double, double> c2) {
+        return sqrt(pow(c1.first - c2.first, 2) + pow(c1.second - c2.second, 2));
+    }
+
+    void longest_route(pugi::xml_document& data) {
+        unordered_map<wstring, vector<pair<double, double>>> route_coordinates;
+        unordered_map<wstring, double> route_length;
+        wstring transport;
+        wstring routes;
+        wstring cur_route;
+        pugi::xml_node main_node = data.first_child();
+        for (pugi::xml_node node1 = main_node.first_child(); node1; node1 = node1.next_sibling()) {
+            for (pugi::xml_node node2 = node1.first_child(); node2; node2 = node2.next_sibling()) {
+                wstring name = node2.name();
+                wstring value = node2.child_value();
+
+                if (name == L"type_of_vehicle") {
+                    transport = value;
+                }
+
+                if (name == L"routes" and transport == type) {
+                    routes = value;
+                }
+
+                if (name == L"coordinates" and transport == type) {
+                    string coordinates(value.begin(), value.end());
+                    pair<double, double> Crd = make_coordinates(coordinates);
+                    for (int i = 0; routes[i] != '\0'; i++) {
+                        if (routes[i] == '.' or routes[i] == ',' or routes[i + 1] == '\0') {
+                            route_coordinates[cur_route].push_back(Crd);
+                            route_length.insert({ cur_route, 0 });
+                            cur_route = L"";
+                        }
+                        else {
+                            cur_route += routes[i];
+                        }
+
+                    }
+                }
+
+            }
+        }
+
+        pair<wstring, double> max = { L"none", 0 };
+        for (auto route : route_coordinates) { {
+                wstring name_route = route.first;
+                vector<pair<double, double>>& arr = route.second;
+                for (int i = 0; i < arr.size() - 1; i++) {
+                    route_length[name_route] += distance(arr[i], arr[i + 1]);
+                    if (route_length[name_route] > max.second) {
+                        max.first = name_route;
+                        max.second = route_length[name_route];
+                    }
+                }
+            }
+        }
+        wcout << L"The longest route: " << max.first << endl;
+    }
+
+    void max_street(pugi::xml_document& data) {
+        pugi::xml_node main_node = data.first_child();
+        unordered_map<wstring, int> streets;
+        wstring transport;
+        pair<wstring, int> max = { L"none", 0 };
+        for (pugi::xml_node node1 = main_node.first_child(); node1; node1 = node1.next_sibling()) {
+            for (pugi::xml_node node2 = node1.first_child(); node2; node2 = node2.next_sibling()) {
+                wstring name = node2.name();
+                wstring value = node2.child_value();
+                
+                if (name == L"type_of_vehicle") {
+                    transport = value;
+                }
+
+                else if (name == L"name_stopping" and transport == type) {
+                    streets[value]++;
+                    if (streets[value] > max.second) {
+                        max.first = value;
+                        max.second = streets[value];
+                    }
+                }
+            }
+        }
+        wcout << L"The street with max stops: " << max.first << endl;
+    }
+};
+
+int main() {
+       wcout.imbue(locale("rus_rus.866"));
+   wcin.imbue(locale("rus_rus.866"));
+    pugi::xml_document data;
+    data.load_file("data.xml");
+    Transport a(L"Автобус");
+    a.max_route(data);
+    a.longest_route(data);
+    a.max_street(data);
+    return 0;
 }
